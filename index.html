@@ -8,9 +8,7 @@
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  	
-
-
+</head>
 <body>
 	<div class="container-fluid pt-3">
   	<h1 class="text-info">My First Bootstrap Page</h1>
@@ -21,11 +19,11 @@
       <input type="text" class="form-control" id="usr">
     </div>
    	
-    <button type="enter" class="btn btn-primary">Submit</button>
+    <button type="enter" class="btn btn-primary" id="boton">Submit</button>
  
     <br/>
     <br/>        
-  	<table class="table table-striped">
+  	<table class="table table-striped" id="mytable">
     <thead>
       <tr>
         <th>Repository</th>
@@ -33,16 +31,34 @@
         <th>Followers</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td>usr</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-    </tbody>
-  </table>
+  
+  	</table>
 
 	</div>
+
+
+	<script>
+		$(document).ready(function() {
+
+			$("#boton").click(function() {
+		  	var user = document.getElementById("usr").value;
+		  	var url = "http://api.github.com/users/" + user + "/repos";
+
+		  	$.get(url, function(data, status)
+		  	{
+		  		for(var i=0; i<data.length; i++)
+		  		{
+		  			var fila = "<tr><td>"+ data[i].name + "</td><td>" + data[i].description + "</td><td>" + data[i].stargazers_count;
+		  			$("#mytable").append(fila);
+		  		}
+	 		});
+
+		});
+	});
+
+
+
+	</script>
 
 
 </body>
