@@ -23,7 +23,7 @@
  
     <br/>
     <br/>        
-  	<table class="table table-striped" id="mytable">
+  	<table class="table table-striped" id="tabla">
     <thead>
       <tr>
         <th>Repository</th>
@@ -40,18 +40,35 @@
 	<script>
 		$(document).ready(function() {
 
+      var longTabla = 0;
+
+
 			$("#boton").click(function() {
 		  	var user = document.getElementById("usr").value;
 		  	var url = "http://api.github.com/users/" + user + "/repos";
+        
+        for(var j=0; longTabla>0 ;j++)
+        {
+            $("#tabla tr:last").remove();
+            longTabla --;
+        }
 
-		  	$.get(url, function(data, status)
+		  	$.get(url, function(data)
 		  	{
 		  		for(var i=0; i<data.length; i++)
 		  		{
 		  			var fila = "<tr><td>"+ data[i].name + "</td><td>" + data[i].description + "</td><td>" + data[i].stargazers_count;
-		  			$("#mytable").append(fila);
+		  			$("#tabla").append(fila);
+            longTabla ++;
 		  		}
-	 		});
+
+          if (longTabla==0 )
+          {
+            alert("El usuario introducido no es válido");
+          }
+	 		  });
+
+
 
 		});
 	});
